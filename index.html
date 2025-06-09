@@ -1,133 +1,25 @@
-<!-- Akan dibagi jadi 2 bagian: FRONTEND (GitHub Pages) dan BACKEND (Replit) -->
-
-<!-- ======================= -->
-<!-- 📦 FRONTEND (index.html) -->
-<!-- ======================= -->
-<!-- File ini kamu taruh di repo GitHub Pages -->
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Kuis Dinamika Penduduk</title>
-  <style>
-    body {
-      background-color: #121212;
-      color: #ffffff;
-      font-family: sans-serif;
-      padding: 2rem;
-      max-width: 800px;
-      margin: auto;
-    }
-    textarea {
-      width: 100%;
-      height: 100px;
-      margin-top: 1rem;
-      padding: 1rem;
-      background: #1e1e1e;
-      color: white;
-      border: 1px solid #444;
-    }
-    button {
-      background: #1db954;
-      color: white;
-      padding: 0.5rem 1rem;
-      border: none;
-      cursor: pointer;
-      margin-top: 1rem;
-    }
-    .feedback {
-      margin-top: 1rem;
-      background: #222;
-      padding: 1rem;
-      border-left: 4px solid #1db954;
-    }
-  </style>
+  <meta charset="UTF-8">
+  <title>Dinamika Penduduk</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Kuis Dinamika Penduduk</h1>
-  <div id="quiz">
-    <p id="question"></p>
-    <textarea id="answer" placeholder="Tulis jawabanmu di sini..."></textarea>
-    <br />
-    <button onclick="submitAnswer()">Kirim Jawaban</button>
-    <div class="feedback" id="feedback"></div>
-    <p id="progress"></p>
+  <div class="container">
+    <h1>Dinamika Penduduk</h1>
+    <div id="quiz-box">
+      <div id="question-number"></div>
+      <p id="question-text"></p>
+      <textarea id="answer" placeholder="Tulis jawaban kamu di sini..."></textarea>
+      <div id="feedback"></div>
+      <button id="submit">Konfirm Jawaban</button>
+      <button id="next" disabled>Lanjut</button>
+    </div>
+    <div id="score-box" class="hidden">
+      <h2>Skor Akhir: <span id="final-score">0</span>%</h2>
+    </div>
   </div>
-  <script>
-    const questions = [
-      "Apa yang dimaksud dengan dinamika penduduk?",
-      "Apa yang dimaksud dengan kepadatan penduduk?",
-      "Jumlah penduduk India pada tahun 2017 adalah 1,352,086,000 jiwa, sementara luas wilayahnya adalah 3,287,263 km2. Berapa kepadatan penduduknya?",
-      "Jumlah penduduk Singapura pada tahun 2022 adalah 5,534,000 jiwa dan luas wilayahnya 733 km2. Berapa kepadatan penduduknya?",
-      "Berdasarkan soal 3 dan 4, negara mana yang lebih padat? Mengapa?",
-      "Sebutkan 3 hal penyebab perubahan jumlah penduduk!",
-      "Jika kelahiran = 50,000 jiwa, populasi = 10,000,000 jiwa. Berapa angka kelahiran kasar?",
-      "Jika kematian = 20,000 jiwa, populasi = 10,000,000 jiwa. Berapa angka kematian kasar?",
-      "Jika migrasi keluar = 70,000, populasi = 10,000,000. Berapa angka migrasi keluar?",
-      "Jika migrasi masuk = 30,000, populasi = 10,000,000. Berapa angka migrasi masuk?",
-      "Apa pertumbuhan populasi dari data sebelumnya?",
-      "Apa faktor naik turunnya angka kelahiran?",
-      "Apa faktor naik turunnya angka kematian?",
-      "Jelaskan jenis migrasi internasional & internal + contoh",
-      "Jelaskan definisi piramida penduduk",
-      "Jelaskan piramida penduduk ekspansif: golongan terbanyak & tersedikit?",
-      "Jelaskan piramida penduduk stasioner",
-      "Jelaskan piramida penduduk konstruktif",
-      "Apa itu komposisi penduduk?",
-      "Jelaskan komposisi penduduk secara biologis + contoh",
-      "Jelaskan komposisi penduduk secara budaya + contoh",
-      "Jelaskan komposisi penduduk secara ekonomi + contoh",
-      "Apa hubungan pertumbuhan penduduk besar dengan kualitas hidup?",
-      "Apa dampak dari ledakan penduduk?",
-      "Apa dampak distribusi penduduk tidak merata?",
-      "Dampak negatif dinamika penduduk terhadap lingkungan?",
-      "Dampak negatif dinamika penduduk terhadap komposisi?",
-      "Langkah pemerintah atasi masalah dinamika penduduk?",
-      "Kesimpulan materi dinamika penduduk"
-    ];
-
-    let current = 0;
-    let score = 0;
-    let used = [];
-    let selected = [];
-
-    while (selected.length < 20) {
-      const i = Math.floor(Math.random() * questions.length);
-      if (!used.includes(i)) {
-        selected.push(questions[i]);
-        used.push(i);
-      }
-    }
-
-    function loadQuestion() {
-      document.getElementById("feedback").innerText = "";
-      document.getElementById("answer").value = "";
-      document.getElementById("question").innerText = selected[current];
-      document.getElementById("progress").innerText = `Soal ${current + 1} dari 20`;
-    }
-
-    async function submitAnswer() {
-      const answer = document.getElementById("answer").value;
-      const res = await fetch("https://your-replit-url.replit.app/evaluate", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ question: selected[current], answer })
-      });
-
-      const data = await res.json();
-      if (data.correct) score++;
-      document.getElementById("feedback").innerText = data.feedback;
-      current++;
-
-      if (current < 20) {
-        setTimeout(loadQuestion, 2500);
-      } else {
-        document.getElementById("quiz").innerHTML = `<h2>Skor Akhir: ${score * 5}% (${score}/20 benar)</h2>`;
-      }
-    }
-
-    loadQuestion();
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
