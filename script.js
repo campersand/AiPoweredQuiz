@@ -29,7 +29,7 @@ document.getElementById("submit").onclick = async () => {
   const answer = document.getElementById("answer").value;
   const question = selectedQuestions[current];
 
-  const response = await fetch("https://DinamikaPenduduk.Frostcatzz.repl.co", {
+  const response = await fetch("https://a59c9a01-02b3-42dc-a551-8d42bfdb3880-00-x4gg61vtn32p.picard.replit.dev/check", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ question, answer })
